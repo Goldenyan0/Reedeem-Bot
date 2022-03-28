@@ -1,0 +1,15 @@
+{
+    "token": "ODIzOTI1MTc0OTM5NTQ5Njk2.YFn6HQ.fQxuUofx0yg-LKt81rG-1SD81JI",
+    "prefix": "!",
+    "logo":  "https://cdn.discordapp.com/attachments/705821190119227473/831450796436226078/wp5334246.png",
+    "hex_color": "#0099ff", 
+    "community_name": "GoldenCity BOT", 
+    "role_access_id": "743199034767835235",
+    "code_length": 24,
+    "numbers_in_code": false,
+
+    "database_host": "91.121.30.53:3306",
+    "database_user": "u3592_2pl4zPiwVE",
+    "database_password": "=4hi8ydhK5hURW^n==IxoVOz",
+    "database_base": "s3592_Golden_BDD"
+}
