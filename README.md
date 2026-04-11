@@ -1,60 +1,102 @@
-🤖 Redeem BOT (GTA RP)
-📌 Présentation
+# 🤖 Redeem BOT — Discord Reward Code Generator
 
-Ce bot Discord permet de générer des codes de récompense pour un serveur GTA RP.
+<div align="center">
 
-Les codes créés sont stockés dans une base de données MySQL et peuvent être utilisés pour attribuer :
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Discord.js](https://img.shields.io/badge/Discord.js-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-de l’argent (money)
-des objets (item)
-⚙️ Fonctionnement
+**Bot Discord de génération de codes de récompense pour serveur GTA V RP**
 
-Le bot permet à certains membres autorisés de créer des codes uniques destinés à d’autres joueurs.
+</div>
 
-🔑 Principe
-Un staff génère un code via une commande
-Le code est enregistré en base de données
-Le joueur reçoit le code en message privé
-Le serveur est informé de la création
-🧰 Technologies utilisées
-Node.js
-discord.js
-MySQL
-🗃️ Base de données
+---
 
-Le bot utilise une table codes contenant :
+## 📌 Présentation
 
-code → code généré
-type → type de récompense (money / item)
-amount → quantité
-🔐 Permissions
+**Redeem BOT** est un bot Discord permettant au staff d'un serveur GTA RP de **générer des codes de récompense uniques** pour les joueurs.
 
-Seuls les utilisateurs ayant le rôle défini par role_access_id peuvent utiliser les commandes.
+Les codes sont :
+- Stockés en **base de données MySQL**
+- Envoyés **en message privé** au joueur ciblé
+- Notifiés dans le **salon Discord** configuré
 
-💻 Commandes
-🎟️ Créer un code
+### Types de récompenses supportés
+
+| Type | Description |
+|------|-------------|
+| `money` | Attribuer de l'argent en jeu |
+| `item` | Attribuer un objet en jeu |
+
+---
+
+## 🔑 Principe de fonctionnement
+
+```
+Staff → !create @Player money 5000
+         ↓
+    Génération du code unique
+         ↓
+    Insertion en base MySQL
+         ↓
+    Message privé → joueur
+    Message public → salon Discord
+```
+
+---
+
+## 🧰 Technologies utilisées
+
+| Technologie | Rôle |
+|-------------|------|
+| **Node.js** | Runtime principal |
+| **discord.js** | Interaction avec l'API Discord |
+| **MySQL** | Stockage des codes générés |
+
+---
+
+## 🗃️ Structure de la base de données
+
+Table : `codes`
+
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `code` | VARCHAR | Code unique généré |
+| `type` | ENUM | Type de récompense (`money` / `item`) |
+| `amount` | INT | Quantité attribuée |
+
+---
+
+## 💻 Commandes disponibles
+
+### 🎟️ Créer un code
+```
 !create @user <type> <amount>
+```
 
-Exemple :
-
+**Exemple :**
+```
 !create @Player money 5000
-📖 Aide
+```
+
+### 📖 Aide
+```
 !usage
-🧠 Détails techniques
-Génération des codes
-Longueur définie dans config.json
-Possibilité d’inclure :
-uniquement lettres
-lettres + chiffres
-Stockage
-Insertion directe en base MySQL
-Notifications
-📩 Envoi du code en message privé
-📢 Message dans le salon Discord
-⚙️ Configuration
+```
 
-Fichier config.json :
+---
 
+## 🔐 Permissions
+
+Seuls les membres possédant le rôle défini par `role_access_id` dans `config.json` peuvent utiliser les commandes du bot.
+
+---
+
+## ⚙️ Configuration
+
+Fichier `config.json` à créer à la racine du projet :
+
+```json
 {
   "token": "BOT_TOKEN",
   "prefix": "!",
@@ -67,27 +109,68 @@ Fichier config.json :
   "database_password": "",
   "database_base": "dbname"
 }
-▶️ Lancer le bot
+```
+
+### Options de génération des codes
+
+| Option | Description |
+|--------|-------------|
+| `code_length` | Longueur du code généré |
+| `numbers_in_code: false` | Lettres uniquement |
+| `numbers_in_code: true` | Lettres + chiffres |
+
+---
+
+## ▶️ Installation & lancement
+
+### 1. Installer les dépendances
+```bash
 npm install
+```
+
+### 2. Configurer `config.json`
+Renseigner le token Discord, les infos MySQL et l'ID du rôle autorisé.
+
+### 3. Lancer le bot
+```bash
 node index.js
-⚠️ Limites
-Pas de système de redeem côté Discord (juste création des codes)
-Pas de protection contre :
-injections SQL
-doublons de codes
-Gestion d’erreurs minimale
-🚀 Améliorations possibles
-Ajouter une commande redeem
-Sécuriser les requêtes SQL (requêtes préparées)
-Ajouter une expiration des codes
-Interface admin (logs, historique)
-Vérification des codes déjà existants
-📊 Résumé
+```
 
-👉 Ce bot sert principalement à :
+---
 
-générer des codes de récompense
-les stocker en base
-les envoyer aux joueurs
+## ⚠️ Limites connues
 
-C’est donc un outil staff pour distribuer des récompenses sur un serveur GTA RP.
+- ❌ Pas de commande `redeem` côté Discord (création uniquement)
+- ❌ Pas de protection contre les injections SQL
+- ❌ Pas de vérification de doublons de codes
+- ❌ Gestion d'erreurs minimale
+
+---
+
+## 🚀 Améliorations prévues
+
+- [ ] Commande `!redeem <code>` pour utiliser un code
+- [ ] Requêtes SQL préparées (sécurité)
+- [ ] Expiration automatique des codes
+- [ ] Vérification des doublons à la génération
+- [ ] Logs admin et historique des codes utilisés
+- [ ] Interface web d'administration
+
+---
+
+## 📊 Résumé
+
+| Élément | Détail |
+|---------|--------|
+| **Langage** | Node.js |
+| **Plateforme** | Discord |
+| **Stockage** | MySQL |
+| **Usage** | Outil staff — distribution de récompenses GTA RP |
+| **Commandes** | `!create`, `!usage` |
+
+---
+
+<div align="center">
+  <i>Outil staff pour serveur GTA V RolePlay — Génération & distribution de codes de récompense</i><br/>
+  <i>Node.js · Discord.js · MySQL</i>
+</div>
